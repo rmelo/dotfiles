@@ -1,0 +1,16 @@
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_macbook
+  AddKeysToAgent yes
+  IdentitiesOnly yes
+
+
+{ if eq .hostname "Maverick" }}
+  IdentityFile ~/.ssh/id_ed25519_maverick
+{{ else if eq .hostname "Macbus" }}
+  IdentityFile ~/.ssh/id_ed25519_macbus
+{{ else }}
+  IdentityFile ~/.ssh/id_ed25519
+{{ end }}
+
