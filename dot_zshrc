@@ -1,0 +1,14 @@
+# ========== Keyboard bindings ==========
+
+# Option + Delete → delete previous word
+bindkey '^[^?' backward-kill-word
+
+# Option + ← → move backward by word
+bindkey '^[b' backward-word
+
+# Option + → → move forward by word
+bindkey '^[f' forward-word
+
+# Optional: Option + fn + Delete → delete next word (some keyboards)
+bindkey '^[^[[3~' kill-word
+
