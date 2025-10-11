@@ -1,12 +1,5 @@
 Host github.com
-  HostName github.com
   User git
-  AddKeysToAgent yes
-  IdentitiesOnly yes
-
-{{- if eq .chezmoi.hostname "Maverick" }}
-  IdentityFile ~/.ssh/id_ed25519_maverick
-{{- else if eq .chezmoi.hostname "Macbus" }}
-  IdentityFile ~/.ssh/id_ed25519_macbus
-{{- end }}
+  IdentityAgent ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+  UseKeyChain yes
 
