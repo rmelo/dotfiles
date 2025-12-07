@@ -1,0 +1,16 @@
+[user]
+  name = {{ .name }}
+  email = {{ .email }}
+  signingkey = "{{ .git.sshSigningKey }}"
+
+[commit]
+  gpgsign = true
+
+[gpg]
+  format = ssh
+
+[core]
+  editor = vim
+
+[gpg "ssh"]
+  program = /opt/1Password/op-ssh-sign
