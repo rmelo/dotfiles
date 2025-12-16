@@ -1,0 +1,17 @@
+" Enable syntax highlighting
+syntax on
+
+" Enable true color (24-bit)
+if has("termguicolors")
+  set termguicolors
+endif
+
+" Appearance
+set background=dark
+set number
+set cursorline
+set showcmd
+
+" Detect filetypes and load related plugins
+filetype plugin indent on
+
