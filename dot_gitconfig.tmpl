@@ -1,6 +1,7 @@
 [user]
   name = {{ .name }}
   email = {{ .email }}
+{{ if eq .chezmoi.os "linux" }}
   signingkey = "{{ .git.sshSigningKey }}"
 
 [commit]
@@ -14,3 +15,4 @@
 
 [gpg "ssh"]
   program = /opt/1Password/op-ssh-sign
+{{ end }}
