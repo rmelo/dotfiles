@@ -1,0 +1,33 @@
+---
+- name: Multi-OS Software Setup
+  hosts: localhost
+  connection: local
+  tasks:
+    # --- STEP 1: INSTALL ON FEDORA ---
+    - name: Install Zsh and Git on Fedora
+      ansible.builtin.dnf:
+        name: 
+          - zsh
+          - git
+        state: present
+      become: true
+      when: ansible_os_family == "RedHat"
+
+    # --- STEP 2: INSTALL ON MACOS ---
+    - name: Install Zsh and Git on macOS
+      community.general.homebrew:
+        name: 
+          - zsh
+          - git
+        state: present
+      when: ansible_os_family == "Darwin"
+
+    # --- STEP 3: CONFIGURE (SHARED) ---
+    - name: Set Zsh as the default shell
+      ansible.builtin.user:
+        name: "{{ ansible_user_id }}"
+        shell: /bin/zsh
+      become: true
+      # Skip on Mac if you aren't an admin, or use 'chsh' manually
+      when: ansible_os_family == "RedHat" 
+

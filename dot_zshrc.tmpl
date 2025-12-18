@@ -1,0 +1,54 @@
+
+#OH-MY-ZSH
+export ZSH="$HOME/.oh-my-zsh"
+
+#THEMES
+#ZSH_THEME="robbyrussell"
+#ZSH_THEME="bira"
+#ZSH_THEME="pure"
+#ZSH_THEME="amuse"
+#ZSH_THEME="minimal"
+ZSH_THEME="nanotech"
+
+plugins=(git) 
+source $ZSH/oh-my-zsh.sh
+
+
+# Prefer 1Password SSH Agent if available
+ONEPASS_AGENT="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+if [ -S "$ONEPASS_AGENT" ]; then
+  export SSH_AUTH_SOCK="$ONEPASS_AGENT"
+fi
+
+{{ if eq .chezmoi.os "darwin" }}
+# ========== Keyboard bindings ==========
+
+# Option + Delete → delete previous word
+bindkey '^[^?' backward-kill-word
+
+# Option + ← → move backward by word
+bindkey '^[b' backward-word
+
+# Option + → → move forward by word
+bindkey '^[f' forward-word
+
+# Optional: Option + fn + Delete → delete next word (some keyboards)
+bindkey '^[^[[3~' kill-word
+{{ end}}
+
+{{ if eq .chezmoi.os "linux" }}
+# 1. Fix Alt + Backspace (Line Deletion/Kill)
+# Your keyd sends alt+backspace as a single signal; Zsh needs to map it to backward-kill-line
+bindkey '^[[127;3u' backward-kill-line   # Standard Alt+Backspace code
+bindkey '^U' backward-kill-line          # Backup for C-u (which keyd is likely sending)
+
+# 2. Fix Alt + Left (Select to Home)
+# Note: Zsh doesn't have a "Select" mode by default like a text editor.
+# We map it to move to the beginning of the line:
+bindkey '^[[1;3D' beginning-of-line      # Common code for Alt+Left
+bindkey '^[[H' beginning-of-line         # Home key code
+
+# 3. Fix Alt + Right (Select to End)
+bindkey '^[[1;3C' end-of-line            # Common code for Alt+Right
+bindkey '^[[F' end-of-line               # End key code
+{{ end}}
