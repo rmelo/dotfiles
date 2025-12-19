@@ -5,6 +5,42 @@ It supports **macOS** and **Fedora Linux**.
 
 ---
 
+## Diagram
+
+```mermaid
+---
+config:
+  layout: elk
+  look: neo
+  theme: redux
+---
+flowchart BT
+ 
+  github(["Github"])
+
+  subgraph os["Operational System"]
+    subgraph chezmoi_workspace["chezmoi workspace<br/><small><i>./local/share/chezmoi/"]
+      chezmoi(["<b>chezmoi</b> <br /><small>(executable)"])
+      templates
+      files
+      config["chezmoi.yaml <br /><small>(config)"]
+    end
+
+    subgraph home["home dir<br /><small>~/user/"]
+      dotfiles[.dotfiles]
+    end
+    
+    chezmoi -.-> config
+    chezmoi -.->templates
+    chezmoi -.->files
+    templates -.->|generates| dotfiles
+    files -.->|copy| dotfiles
+  end
+
+  chezmoi_workspace -->|stored/tracked on git| github
+```
+
+
 ## Requirements
 
 - git
