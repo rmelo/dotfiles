@@ -1,0 +1,47 @@
+# --------------------------------------------------
+# STEP 1: INSTALL PACKAGES ON FEDORA / RHEL
+# --------------------------------------------------
+- name: Install Zsh and Git on Fedora / RHEL
+  ansible.builtin.dnf:
+    name:
+      - zsh
+    state: present
+  become: true
+  when: ansible_facts["os_family"] == "RedHat"
+
+# --------------------------------------------------
+# STEP 2: INSTALL PACKAGES ON MACOS
+# --------------------------------------------------
+- name: Install Zsh and Git on macOS
+  community.general.homebrew:
+    name:
+      - zsh
+    state: present
+  when: ansible_facts["os_family"] == "Darwin"
+# --------------------------------------------------
+# STEP 3: SET DEFAULT SHELL
+# --------------------------------------------------
+- name: Set Zsh as the default shell
+  ansible.builtin.user:
+    name: "{{ ansible_facts['user_id'] }}"
+    shell: /bin/zsh
+  become: true
+
+# --------------------------------------------------
+# STEP 4: INSTALL OH MY ZSH
+# --------------------------------------------------
+- name: Download Oh My Zsh installer
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: "{{ ansible_facts['env']['HOME'] }}/install-ohmyzsh.sh"
+    mode: "0755"
+
+- name: Check if Oh My Zsh is installed
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['env']['HOME'] }}/.oh-my-zsh"
+  register: ohmyzsh_dir
+
+- name: Install Oh My Zsh
+  ansible.builtin.script:
+    cmd: "{{ ansible_facts['env']['HOME'] }}/install-ohmyzsh.sh"
+  when: not ohmyzsh_dir.stat.exists
