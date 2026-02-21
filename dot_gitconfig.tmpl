@@ -1,7 +1,6 @@
 [user]
   name = {{ .name }}
   email = {{ .email }}
-  message = "Hellow world"
 {{ if eq .chezmoi.os "linux" }}
   signingkey = "{{ .git.sshSigningKey }}"
 

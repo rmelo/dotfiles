@@ -1,0 +1,37 @@
+# --------------------------------------------------
+# STEP 1: INSTALL POWERLINE FONTS
+# Ref: https://fmacedoo.medium.com/oh-my-zsh-with-powerline-fonts-pretty-simple-as-you-deserve-fbe7f6d23723
+# --------------------------------------------------
+
+- name: Check if Powerline is installed
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['env']['HOME'] }}/.cache/powerline-fonts-repo"
+  register: powerline_fonts_dir
+
+- block:
+
+  - name: Create cache dir for powerline fonts repo
+    ansible.builtin.file:
+      path: "{{ ansible_facts['env']['HOME'] }}/.cache/powerline-fonts-repo"
+      state: directory
+      mode: '0755'
+
+  - name: Clone powerline fonts
+    ansible.builtin.git:
+      repo: 'https://github.com/powerline/fonts.git'
+      dest: "{{ ansible_facts['env']['HOME'] }}/.cache/powerline-fonts-repo"
+      depth: 1
+      force: true
+
+  - name: Run powerline fonts install script
+    ansible.builtin.command: ./install.sh
+    args:
+      chdir: "{{ ansible_facts['env']['HOME'] }}/.cache/powerline-fonts-repo/**"
+
+  # - name: Remove powerline fonts repo
+  #   ansible.builtin.file:
+  #     path: "{{ ansible_facts['env']['HOME'] }}/.cache/powerline-fonts-repo"
+  #     state: absent
+  #   when: not powerline_fonts_dir.stat.exists
+
+  when: not powerline_fonts_dir.stat.exists

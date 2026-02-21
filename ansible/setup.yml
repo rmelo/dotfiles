@@ -6,4 +6,5 @@
 
   roles:
     - zsh
+    - powerline-fonts
     - golang 
