@@ -5,6 +5,7 @@
   ansible.builtin.dnf:
     name:
       - zsh
+      - git
     state: present
   become: true
   when: ansible_facts["os_family"] == "RedHat"
@@ -16,6 +17,7 @@
   community.general.homebrew:
     name:
       - zsh
+      - git
     state: present
   when: ansible_facts["os_family"] == "Darwin"
 # --------------------------------------------------
