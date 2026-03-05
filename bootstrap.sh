@@ -27,7 +27,22 @@ if [[ "$(uname)" == "Darwin" ]]; then
 fi
 
 # ─────────────────────────────────────────────
-# 2. Ansible
+# 2. Git
+# ─────────────────────────────────────────────
+if ! command -v git &>/dev/null; then
+  info "Installing git..."
+  if [[ "$(uname)" == "Darwin" ]]; then
+    brew install git
+  else
+    sudo dnf install -y git
+  fi
+  success "git installed"
+else
+  success "git already installed"
+fi
+
+# ─────────────────────────────────────────────
+# 3. Ansible (also installs python3 on Fedora as dependency)
 # ─────────────────────────────────────────────
 if ! command -v ansible &>/dev/null; then
   info "Installing Ansible..."
