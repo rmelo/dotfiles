@@ -43,86 +43,85 @@ flowchart BT
 
 ## Requirements
 
-- git
-- chezmoi
-- GitHub Personal Access Token (PAT) for the first setup
+- `curl`
+- `git`
+- GitHub Personal Access Token (PAT) for the first setup (only needed if SSH isn't configured yet)
 
 ---
 
-## 1. Install chezmoi
-
-Follow the official instructions:  
-https://www.chezmoi.io/install/
-
-Verify:
+## Quick Start (new machine)
 
 ```bash
-chezmoi --version
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/rmelo/dotfiles/main/bootstrap.sh)"
 ```
-## 2. First-time setup (no SSH yet)
 
-Initialize chezmoi using HTTPS:
+The script will:
+1. Install Homebrew (macOS) or use dnf (Fedora)
+2. Install Ansible and chezmoi
+3. Prompt for your name, email, and SSH signing key
+4. Run `chezmoi init` + `chezmoi apply`
+5. Run `ansible-playbook` to install all tools
+
+⚠️ `~/.config/chezmoi/chezmoi.yaml` is created locally and must not be committed.
+
+---
+
+## Manual Setup
+
+If you prefer step-by-step:
+
+### 1. Install chezmoi
 
 ```bash
-chezmoi init https://github.com/rmelo/dotfiles.git
+sh -c "$(curl -fsLS get.chezmoi.io)"
 ```
 
-When prompted by GitHub:
-
-Username → your GitHub username
-
-Password → GitHub Personal Access Token
-
-Apply the dotfiles:
-
-```bash
-chezmoi apply
-```
-
-## 3. Configure local variables
-
-Create the local chezmoi config file:
+### 2. Configure local variables
 
 ```bash
 mkdir -p ~/.config/chezmoi
 vim ~/.config/chezmoi/chezmoi.yaml
 ```
 
-Example:
-
 ```yaml
 data:
   name: "Your name"
   email: "Your git email"
   git:
-    sshSigningKey: "Your signin key"
+    sshSigningKey: "Your signing key"
 ```
-⚠️ This file is local only and must not be committed.
 
-### Apply again:
+### 3. Init and apply dotfiles
 
 ```bash
+chezmoi init https://github.com/rmelo/dotfiles.git
 chezmoi apply
 ```
 
-## 4. Switch repository to SSH (recommended)
+### 4. Install tools via Ansible
 
-After SSH keys are installed by the dotfiles:
+```bash
+make install
+```
+
+### 5. Switch to SSH remote (recommended)
+
+After your SSH keys are set up via 1Password:
 
 ```bash
 cd ~/.local/share/chezmoi
 git remote set-url origin git@github.com:rmelo/dotfiles.git
 ```
 
-From now on, updates will use SSH.
+---
 
-## 5. Update dotfiles
+## Updating
 
 ```bash
 chezmoi update
 ```
 
-Useful commands
+Useful commands:
 ```bash
 chezmoi diff     # Preview changes
 chezmoi apply    # Apply changes

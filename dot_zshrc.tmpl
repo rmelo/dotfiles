@@ -16,7 +16,11 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Prefer 1Password SSH Agent if available
+{{ if eq .chezmoi.os "darwin" -}}
 ONEPASS_AGENT="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+{{- else if eq .chezmoi.os "linux" -}}
+ONEPASS_AGENT="$HOME/.1password/agent.sock"
+{{- end }}
 if [ -S "$ONEPASS_AGENT" ]; then
   export SSH_AUTH_SOCK="$ONEPASS_AGENT"
 fi

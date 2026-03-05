@@ -21,11 +21,19 @@
 # --------------------------------------------------
 # STEP 3: SET DEFAULT SHELL
 # --------------------------------------------------
-- name: Set Zsh as the default shell
+- name: Set Zsh as the default shell (macOS - Homebrew zsh)
+  ansible.builtin.user:
+    name: "{{ ansible_facts['user_id'] }}"
+    shell: /opt/homebrew/bin/zsh
+  become: true
+  when: ansible_facts["os_family"] == "Darwin"
+
+- name: Set Zsh as the default shell (Linux)
   ansible.builtin.user:
     name: "{{ ansible_facts['user_id'] }}"
     shell: /bin/zsh
   become: true
+  when: ansible_facts["os_family"] == "RedHat"
 
 # --------------------------------------------------
 # STEP 4: INSTALL OH MY ZSH
