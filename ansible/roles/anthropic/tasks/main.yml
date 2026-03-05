@@ -1,7 +1,9 @@
 - name: Install Claude CLI
   block:
     - name: Check if Claude CLI is installed
-      ansible.builtin.command: which claude
+      ansible.builtin.shell:
+        cmd: command -v claude
+        executable: /bin/bash
       register: claude_installed
       changed_when: false
       failed_when: false
@@ -9,4 +11,5 @@
     - name: Install Claude CLI via install script
       ansible.builtin.shell:
         cmd: curl -fsSL https://claude.ai/install.sh | bash
+        executable: /bin/bash
       when: claude_installed.rc != 0
