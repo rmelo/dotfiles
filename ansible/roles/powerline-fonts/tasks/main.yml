@@ -26,7 +26,7 @@
   - name: Run powerline fonts install script
     ansible.builtin.command: ./install.sh
     args:
-      chdir: "{{ ansible_facts['env']['HOME'] }}/.cache/powerline-fonts-repo/**"
+      chdir: "{{ ansible_facts['env']['HOME'] }}/.cache/powerline-fonts-repo"
 
   # - name: Remove powerline fonts repo
   #   ansible.builtin.file:
