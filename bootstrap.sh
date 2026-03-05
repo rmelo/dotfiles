@@ -87,7 +87,9 @@ if [[ ! -d "$CHEZMOI_SOURCE/.git" ]]; then
   chezmoi init "$DOTFILES_REPO"
   success "chezmoi initialized"
 else
-  success "chezmoi source dir already exists, skipping init"
+  info "chezmoi source dir already exists, pulling latest..."
+  git -C "$CHEZMOI_SOURCE" pull
+  success "chezmoi source updated"
 fi
 
 info "Applying dotfiles..."
