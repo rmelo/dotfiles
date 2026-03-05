@@ -1,4 +1,5 @@
 - name: Install Claude CLI
+  tags: claude
   block:
     - name: Check if Claude CLI is installed
       ansible.builtin.shell:
