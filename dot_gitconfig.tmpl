@@ -1,8 +1,17 @@
 [user]
-  name = {{ .name }}
-  email = {{ .email }}
+  name = {{ .git.me.name }}
+  email = {{ .git.me.email }}
+[includeIf "gitdir:~/Workspace/work/travelier/brands/bo/"]
+  path = ~/.gitconfig-p10
+
+[url "git@github-p10:Plataforma-10/"]
+  insteadOf = git@github.com:Plataforma-10/
+
+[url "git@github-p10:buscaonibus/"]
+  insteadOf = git@github.com:buscaonibus/
+
 {{ if eq .chezmoi.os "linux" }}
-  signingkey = "{{ .git.sshSigningKey }}"
+  signingkey = "{{ .git.me.sshSigningKey }}"
 
 [commit]
   gpgsign = true

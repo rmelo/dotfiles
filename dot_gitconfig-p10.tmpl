@@ -1,0 +1,8 @@
+[user]
+  name = {{ .git.p10.name }}
+  email = {{ .git.p10.email }}
+
+{{ if eq .chezmoi.os "linux" }}
+  signingkey = "{{ .git.p10.sshSigningKey }}"
+
+{{ end }}
