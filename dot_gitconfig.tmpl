@@ -1,7 +1,11 @@
 [user]
   name = {{ .git.me.name }}
   email = {{ .git.me.email }}
+
 [includeIf "gitdir:~/Workspace/work/travelier/brands/bo/"]
+  path = ~/.gitconfig-p10
+
+[includeIf "gitdit:~/Workspace/work/travelier/projects/"]
   path = ~/.gitconfig-p10
 
 [url "git@github-p10:Plataforma-10/"]
@@ -9,6 +13,9 @@
 
 [url "git@github-p10:buscaonibus/"]
   insteadOf = git@github.com:buscaonibus/
+
+[url "git@github-ante-travelier:ante-travelier/"]
+  insteadOf = git@github.com:ante-travelier/
 
 {{ if eq .chezmoi.os "linux" }}
   signingkey = "{{ .git.me.sshSigningKey }}"

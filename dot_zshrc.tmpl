@@ -69,3 +69,20 @@ go-brands (){ cd ~/Workspace/work/travelier/brands }
 go-do (){ cd ~/Workspace/work/travelier/brands/do/ }
 go-bo (){ cd ~/Workspace/work/travelier/brands/bo/ }
 go-p10 (){ cd ~/Workspace/work/travelier/brands/p10/ }
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/rodrigomelo/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/rodrigomelo/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/rodrigomelo/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/rodrigomelo/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Kiro AWS
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+
+# Anthropic Claude
+
+alias claude-work='CLAUDE_CONFIG_DIR=~/.claude-work/ /Users/rodrigomelo/.local/bin/claude "/color red"'
+alias claude-me='CLAUDE_CONFIG_DIR=~/.claude-me/ /Users/rodrigomelo/.local/bin/claude "/color yellow" '
+alias claude="echo 'Use specific commands: claude-me or claude-work'"
